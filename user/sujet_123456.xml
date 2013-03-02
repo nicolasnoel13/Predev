@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sujet id="123456">
+  <annee>2011</annee>
+  <matiere>lol</matiere>
+  <type>java</type>
+  <liste_fichiers>
+    <fichier>java.java</fichier>
+    <fichier>lol.java</fichier>
+  </liste_fichiers>
+  <parties>
+    <partie>aergaerg</partie>
+    <partie>aegaerg</partie>
+    <partie>aergaerg</partie>
+  </parties>
+</sujet>
+
