@@ -71,6 +71,7 @@ public class sujet_xml {
 		sc.close();
 	}
 	
+	
 	public void creation_xml() {
 		//Génère le sujet.xml à partir des infos stockees dans les attributs
 	    Element racine = new Element("sujet");
@@ -90,24 +91,18 @@ public class sujet_xml {
 	    type.setText(this.type);
 	    racine.addContent(type);
 	    
-	    Element liste_fichiers = new Element("liste_fichiers");
-	    racine.addContent(liste_fichiers);
-	    
 	    for(int i = 0; i < this.liste_fichiers_attendus.size(); i++)
 	    {
-	    	Element fichier = new Element("fichier");
+	    	Element fichier = new Element("fichier_"+(i+1));
 		    fichier.setText(this.liste_fichiers_attendus.get(i));
-		    liste_fichiers.addContent(fichier);
+		    racine.addContent(fichier);
 	    }
-	    
-	    Element parties = new Element("parties");
-	    racine.addContent(parties);
 	    
 	    for(int i = 0; i < this.parties_a_omettre.size(); i++)
 	    {
-	    	Element partie = new Element("partie");
+	    	Element partie = new Element("partie_"+(i+1));
 		    partie.setText(this.parties_a_omettre.get(i));
-		    parties.addContent(partie);
+		    racine.addContent(partie);
 	    }
 	    
 		try
@@ -156,46 +151,39 @@ public class sujet_xml {
 		     System.out.println("type : "+sujet.getChild("type").getText());
 		     this.type=sujet.getChild("type").getText();
 		   
-//EN DEVELOPPEMENT
-		     
-		     // NOTE PERSO : sujet.getChild("fichiers").getChildren("fichier")
-		     
-		     /*
 		     //Gestion des fichiers
-		     System.out.println("fichier : "+sujet.getChild("fichiers").getChild("fichier").getText());
-		     System.out.println("fichier : "+sujet.getChild("fichier").getText());
-		     System.out.println("fichier : "+sujet.getChild("fichier").getText());
-			ArrayList<Element> listTemp = new ArrayList<Element>(sujet.getChildren("fichier"));
-		    
-
-		     System.out.println("avant test");
-		     Element pourtest = listTemp.get(0);
-		     System.out.println("pendant test");
-		     System.out.println(pourtest.getText());
-		     System.out.println("apres test");
-
-		     
-		     Iterator<?> i = listTemp.iterator();
-		     while(i.hasNext())
+ 
+		     int j=0;
+		     boolean suivant_existe=true;
+		     while(suivant_existe)
 		     {
-		    	System.out.println("on est dans la boucle !");
-		        Element courant = (Element)i.next();
-		        this.liste_fichiers_attendus.add(courant.getText());
-		        System.out.println("ajout du fichier suivant à partir du xml : "+courant.getText());
+		    	try {
+		    	j++;
+		    	String temp =sujet.getChild("fichier_"+j).getText();
+		        this.liste_fichiers_attendus.add(temp);
+		        System.out.println("ajout du fichier suivant à partir du xml : "+temp);
+		    	}
+		    	catch (Exception e) {
+		    		suivant_existe=false;
+		    	}
 		     }
-		     
-		     //Gestion des parties
-		     
-		     List<?> listTemp2 = sujet.getChildren("partie");
-		     Iterator<?> j = listTemp2.iterator();
-		     while(j.hasNext())
+		        
+		    //Gestion des parties
+		     j=0;
+		     suivant_existe=true;
+		     while(suivant_existe)
 		     {
-		        Element courant = (Element)j.next();
-		        this.parties_a_omettre.add(courant.getText());
-		        System.out.println("ajout de la partie à omettre suivante à partir du xml : "+courant.getText());
-		     }
-	      	      */
-//FIN DE EN DEVELOPPEMENT
+		    	try {
+		    	j++;
+		    	String temp =sujet.getChild("partie_"+j).getText();
+		        this.parties_a_omettre.add(temp);
+		        System.out.println("ajout du fichier suivant à partir du xml : "+temp);
+		    	}
+		    	catch (Exception e) {
+		    		suivant_existe=false;
+		    	}
+		     }       
+
 	      }
 	      catch(Exception e){
 	    	  System.out.println(e.toString());
